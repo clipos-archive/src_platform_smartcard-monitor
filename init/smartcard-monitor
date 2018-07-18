@@ -1,0 +1,81 @@
+#!/sbin/runscript
+# SPDX-License-Identifier: LGPL-2.1-or-later
+# Copyright © 2012-2018 ANSSI. All Rights Reserved.
+# Copyright 2012-2013 SGDSN/ANSSI
+# Authors: ANSSI <clipos@ssi.gouv.fr>
+#          Vincent Strubel <clipos@ssi.gouv.fr>
+# Distributed under the terms of the GNU Lesser General Public License v2.1
+
+description="Start smartcard-monitor"
+
+depend() {
+	need pcscd
+}
+
+smartcards_supported() {
+	grep -q '^SMARTCARD_SUPPORT=yes' "/etc/admin/conf.d/smartcards" \
+		|| return 1
+	return 0
+}
+
+start() {
+	smartcards_supported || return 0
+
+        ebegin "Starting smartcard monitor"
+
+	local ctx=$(cat /etc/jails/pcsc/context)
+
+        start-stop-daemon \
+            --start \
+            --make-pidfile \
+            --pidfile "${PIDFILE_MONITOR}" \
+            --background \
+            --exec /usr/sbin/smartcard_monitor -- -d -s ${NOTIFIER_SOCKET} -l ${LISTER_SOCKET} -X ${ctx}
+
+        if [[ $? -ne 0 ]]; then
+		eend 1 "Failed to start smartcard_monitor"
+		return 1
+	fi
+
+        start-stop-daemon \
+            --start \
+            --make-pidfile \
+            --pidfile "${PIDFILE_NOTIFIER}" \
+            --background \
+            --exec /usr/sbin/smartcard_notifier -- -s ${NOTIFIER_SOCKET} -c ${ACTION}
+
+        eend $? "Failed to start smartcard_notifier"
+}
+
+stop() {
+	[[ -e "${PIDFILE_MONITOR}" ]] || return 0
+
+	local ret=0
+	local msg="Failed to stop"
+	vebegin "Stopping smartcard monitor"
+	if [[ -e "${PIDFILE_NOTIFIER}" ]]; then
+		start-stop-daemon \
+		    --stop \
+		    --pidfile "${PIDFILE_NOTIFIER}" \
+		    /usr/sbin/smartcard_notifier
+
+		if [[ $? -ne 0 ]]; then
+			ret=1
+			msg="${msg} smartcard_notifier"
+		fi
+	fi
+
+	if pgrep smartcard_monitor; then
+		start-stop-daemon \
+		    --stop \
+		    --pidfile "${PIDFILE_MONITOR}" \
+		    /usr/sbin/smartcard_monitor
+		if [[ $? -ne 0 ]]; then
+			ret=1
+			msg="${msg} smartcard_monitor"
+		fi
+	fi
+
+	veend $ret "${msg}"
+}
+

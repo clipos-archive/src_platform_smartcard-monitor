@@ -1,0 +1,7 @@
+# SPDX-License-Identifier: LGPL-2.1-or-later
+# Copyright © 2012-2018 ANSSI. All Rights Reserved.
+ACTION="/usr/bin/xcardactions.sh"
+NOTIFIER_SOCKET="/var/run/smartcard/smartcard_notifier.socket"
+LISTER_SOCKET="/var/run/smartcard/smartcard_lister.socket"
+PIDFILE_MONITOR="/var/run/smartcard_monitor.pid"
+PIDFILE_NOTIFIER="/var/run/smartcard_notifier.pid"

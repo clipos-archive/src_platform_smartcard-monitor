@@ -1,0 +1,64 @@
+# CLIP ChangeLog for app-clip/smartcard-monitor
+
+*smartcard-monitor-1.0 (26 Feb 2015)
+
+  26 Feb 2015; ANSSI <clipos@ssi.gouv.fr>
+  +smartcard-monitor-1.0.ebuild, -smartcard-monitor-0.9.ebuild:
+  Add smartcard_list.
+  Change socket directory to a separate directory to expose it
+  in user (not rm_*) vserver.
+
+*smartcard-monitor-0.9 (12 Feb 2015)
+
+  12 Feb 2015; ANSSI <clipos@ssi.gouv.fr>
+  +smartcard-monitor-0.9.ebuild, -smartcard-monitor-0.8-r3.ebuild:
+  Fix lock problem due to last with login >= 8 chars.
+
+*smartcard-monitor-0.8-r2 (11 Feb 2014)
+
+  11 Feb 2014; ANSSI <clipos@ssi.gouv.fr>
+  +smartcard-monitor-0.8-r3.ebuild, -smartcard-monitor-0.8-r2.ebuild:
+  New configuration scheme.
+
+*smartcard-monitor-0.8-r1 (30 Dec 2013)
+
+  30 Dec 2013; Vincent Strubel <clipos@ssi.gouv.fr>
+  +smartcard-monitor-0.8-r1.ebuild, -smartcard-monitor-0.8.ebuild:
+  Force rebuild to add openrc dependency.
+
+*smartcard-monitor-0.8 (14 Nov 2013)
+
+  14 Nov 2013; Vincent Strubel <clipos@ssi.gouv.fr>
+  +smartcard-monitor-0.8.ebuild, -smartcard-monitor-0.7.ebuild,
+  +files/smartcards.conf:
+  Add a new config file to :
+   - globally activate/deactivate support for smartcards (default: on)
+   - list jails for which pkcs11 proxy will be run (default: core)
+   - list jails for which scdaemon will be run (default: none)
+  Merge smartcard-monitor/notifier init scripts into a single
+  smartcard-monitor init script.
+
+*smartcard-monitor-0.7 (14 Oct 2013)
+
+  14 Oct 2013; Vincent Strubel <clipos@ssi.gouv.fr>
+  +smartcard-monitor-0.7.ebuild, -smartcard-monitor-0.6-r1.ebuild:
+  Better compatibility of init scripts with openrc.
+
+*smartcard-monitor-0.6-r1 (26 Mar 2013)
+  26 Mar 2013; ANSSI <clipos@ssi.gouv.fr>
+  Added verictl entry.
+
+*smartcard-monitor-0.6 (06 Feb 2013)
+  06 Feb 2013; ANSSI <clipos@ssi.gouv.fr>
+  bump
+
+*smartcard_monitor-0.3 (23 Oct 2012)
+  23 Oct 2012; ANSSI <clipos@ssi.gouv.fr>
+  smartcard-monitor is now jailed with pcscd, and communicates
+  with smartcard-notifier (in core) that locks/unlocks the
+  station upon card/reader events (insertion/removal).
+
+*smartcard-monitor-0.2 (10 Oct 2012)
+
+  10 Oct 2012; ANSSI <clipos@ssi.gouv.fr>
+  Initial import.

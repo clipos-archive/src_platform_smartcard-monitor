@@ -1,0 +1,19 @@
+26 Feb 2015; ANSSI <clipos@ssi.gouv.fr>
+	Added smartcard_list binary to list actually connected
+	readers containing a card (reader name + ATR).
+
+06 Feb 2012; ANSSI <clipos@ssi.gouv.fr>
+	Fixed locking script to lock only if current user is a member
+	of the pkauth group (i.e. uses a smartcard to log in).
+
+12 Nov 2012; ANSSI <clipos@ssi.gouv.fr>
+	Update smartcard-monitor to include help/usage message
+	and to cleanly deal with missing socket path.
+
+23 Oct 2012; ANSSI <clipos@ssi.gouv.fr>
+	Splitted in two daemons:
+	- smartcard-monitor jailed with pcscd
+	that notifies clients in Unix socket;
+	- smartcard-notifier in core that reads events in Unix socket and
+	triggers predefined action.
+
