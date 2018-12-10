@@ -1,5 +1,5 @@
-// SPDX-License-Identifier: LGPL-2.1-or-later
-// Copyright © 2012-2018 ANSSI. All Rights Reserved.
+/* SPDX-License-Identifier: LGPL-2.1-or-later
+// Copyright © 2012-2018 ANSSI. All Rights Reserved.*/
 /* Copyright 2015 SGDSN/ANSSI */
 /* Distributed under the terms of the GNU Lesser General Public License v2.1 */
 
